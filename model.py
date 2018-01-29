@@ -33,21 +33,23 @@ def fit_linear(df):
 
 
 def data_split(data):
-    x_df=data[['pilot_rank_0', 'pilot_rank_1', 'pilot_rank_2',
-       'alti_8', 'alti_12', 'alti_16',
-       'drct_8', 'drct_12', 'drct_16',
-       'dwpf_8','dwpf_12', 'dwpf_16',
-       'p01i_8','p01i_12', 'p01i_16',
-       'relh_8','relh_12', 'relh_16',
-       'sknt_8','sknt_12', 'sknt_16',
-       'skyc1_8','skyc1_12', 'skyc1_16',
-       'tmpf_8','tmpf_12', 'tmpf_16']]
+    x_df=data[['alti_4', 'alti_8', 'alti_12', 'alti_16',
+       'drct_4','drct_8', 'drct_12', 'drct_16',
+       'dwpf_4', 'dwpf_8','dwpf_12', 'dwpf_16',
+       'p01i_4', 'p01i_8','p01i_12', 'p01i_16',
+       'relh_4', 'relh_8','relh_12', 'relh_16',
+       'sknt_4', 'sknt_8','sknt_12', 'sknt_16',
+       'skyc1_4', 'skyc1_8','skyc1_12', 'skyc1_16',
+       'tmpf_4', 'tmpf_8','tmpf_12', 'tmpf_16',
+       'rank_alt_1', 'rank_alt_2', 'rank_alt_0',
+       'pilot_rank_0', 'pilot_rank_1', 'pilot_rank_2',
+       'psgr_4', 'psgr_8','psgr_12', 'psgr_16']]
     y_df=data['max_alt']
     X=x_df.as_matrix()
     y=np.asarray(y_df,dtype="int_")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-    y_train = soft_class(y_train)
-    y_test = soft_class(y_test)
+    # y_train = soft_class(y_train)
+    # y_test = soft_class(y_test)
     return X_train, X_test, y_train, y_test
 
 def soft_class(predictions):
@@ -73,15 +75,17 @@ def cv_test(data):
     #          'min_samples_split': 3, 'n_estimators': 100}
     # m = RandomForestClassifier(** param)
 
-    features = ['pilot_rank_0', 'pilot_rank_1', 'pilot_rank_2',
-       'alti_8', 'alti_12', 'alti_16',
-       'drct_8', 'drct_12', 'drct_16',
-       'dwpf_8','dwpf_12', 'dwpf_16',
-       'p01i_8','p01i_12', 'p01i_16',
-       'relh_8','relh_12', 'relh_16',
-       'sknt_8','sknt_12', 'sknt_16',
-       'skyc1_8','skyc1_12', 'skyc1_16',
-       'tmpf_8','tmpf_12', 'tmpf_16']
+    features = ['alti_4', 'alti_8', 'alti_12', 'alti_16',
+       'drct_4','drct_8', 'drct_12', 'drct_16',
+       'dwpf_4', 'dwpf_8','dwpf_12', 'dwpf_16',
+       'p01i_4', 'p01i_8','p01i_12', 'p01i_16',
+       'relh_4', 'relh_8','relh_12', 'relh_16',
+       'sknt_4', 'sknt_8','sknt_12', 'sknt_16',
+       'skyc1_4', 'skyc1_8','skyc1_12', 'skyc1_16',
+       'tmpf_4', 'tmpf_8','tmpf_12', 'tmpf_16',
+       'rank_alt_1', 'rank_alt_2', 'rank_alt_0',
+       'pilot_rank_0', 'pilot_rank_1', 'pilot_rank_2',
+       'psgr_4', 'psgr_8','psgr_12', 'psgr_16']
 
     X = data[features].as_matrix()
     y = np.asarray(data['max_alt'],dtype="int_")
