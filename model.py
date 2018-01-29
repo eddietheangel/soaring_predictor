@@ -33,17 +33,18 @@ def fit_linear(df):
 
 
 def data_split(data):
-    x_df=data[['alti_4', 'alti_8', 'alti_12', 'alti_16',
-       'drct_4','drct_8', 'drct_12', 'drct_16',
-       'dwpf_4', 'dwpf_8','dwpf_12', 'dwpf_16',
-       'p01i_4', 'p01i_8','p01i_12', 'p01i_16',
-       'relh_4', 'relh_8','relh_12', 'relh_16',
-       'sknt_4', 'sknt_8','sknt_12', 'sknt_16',
-       'skyc1_4', 'skyc1_8','skyc1_12', 'skyc1_16',
-       'tmpf_4', 'tmpf_8','tmpf_12', 'tmpf_16',
-       'rank_alt_1', 'rank_alt_2', 'rank_alt_0',
-       'pilot_rank_0', 'pilot_rank_1', 'pilot_rank_2',
-       'psgr_4', 'psgr_8','psgr_12', 'psgr_16']]
+    x_df=data[[ 'rank_alt_0', 'rank_alt_1', 'rank_alt_2',
+            'overall_rank_0','overall_rank_1', 'overall_rank_2',
+            'pilot_rank_0', 'pilot_rank_1','pilot_rank_2',
+            'alti_0', 'alti_4', 'alti_8', 'alti_12', 'alti_16',
+            'drct_0', 'drct_4', 'drct_8', 'drct_12', 'drct_16',
+            'dwpf_0', 'dwpf_4', 'dwpf_8', 'dwpf_12', 'dwpf_16',
+            'p01i_0', 'p01i_4', 'p01i_8', 'p01i_12', 'p01i_16',
+            'relh_0', 'relh_4', 'relh_8', 'relh_12', 'relh_16',
+            'sknt_0', 'sknt_4', 'sknt_8', 'sknt_12', 'sknt_16',
+            'skyc1_0', 'skyc1_4', 'skyc1_8', 'skyc1_12', 'skyc1_16',
+            'psgr_0', 'psgr_4', 'psgr_8', 'psgr_12', 'psgr_16',
+            'tmpf_0', 'tmpf_4', 'tmpf_8', 'tmpf_12', 'tmpf_16']]
     y_df=data['max_alt']
     X=x_df.as_matrix()
     y=np.asarray(y_df,dtype="int_")
@@ -66,35 +67,36 @@ def cv_test(data):
     train_list = []
     test_list = []
 
-    GBC_grid = {'learning_rate': 0.05,'max_depth': 2,'max_features': 6,
-                'min_samples_leaf': 3,'min_samples_split': 4,
-                'subsample': 0.75}
-    m = GradientBoostingClassifier(** GBC_grid)
+    # GBC_grid = {'learning_rate': 0.05,'max_depth': 2,'max_features': 6,
+    #             'min_samples_leaf': 3,'min_samples_split': 4,
+    #             'subsample': 0.75}
+    # m = GradientBoostingClassifier(** GBC_grid)
 
     # param = {'max_depth': 5, 'max_features': 7,'min_samples_leaf': 4,
-    #          'min_samples_split': 3, 'n_estimators': 100}
-    # m = RandomForestClassifier(** param)
+             # 'min_samples_split': 3, 'n_estimators': 100}
+    m = RandomForestClassifier()
 
-    features = ['alti_4', 'alti_8', 'alti_12', 'alti_16',
-       'drct_4','drct_8', 'drct_12', 'drct_16',
-       'dwpf_4', 'dwpf_8','dwpf_12', 'dwpf_16',
-       'p01i_4', 'p01i_8','p01i_12', 'p01i_16',
-       'relh_4', 'relh_8','relh_12', 'relh_16',
-       'sknt_4', 'sknt_8','sknt_12', 'sknt_16',
-       'skyc1_4', 'skyc1_8','skyc1_12', 'skyc1_16',
-       'tmpf_4', 'tmpf_8','tmpf_12', 'tmpf_16',
-       'rank_alt_1', 'rank_alt_2', 'rank_alt_0',
-       'pilot_rank_0', 'pilot_rank_1', 'pilot_rank_2',
-       'psgr_4', 'psgr_8','psgr_12', 'psgr_16']
+    features = [ 'rank_alt_0', 'rank_alt_1', 'rank_alt_2',
+            'overall_rank_0','overall_rank_1', 'overall_rank_2',
+            'pilot_rank_0', 'pilot_rank_1','pilot_rank_2',
+            'alti_0', 'alti_4', 'alti_8', 'alti_12', 'alti_16',
+            'drct_0', 'drct_4', 'drct_8', 'drct_12', 'drct_16',
+            'dwpf_0', 'dwpf_4', 'dwpf_8', 'dwpf_12', 'dwpf_16',
+            'p01i_0', 'p01i_4', 'p01i_8', 'p01i_12', 'p01i_16',
+            'relh_0', 'relh_4', 'relh_8', 'relh_12', 'relh_16',
+            'sknt_0', 'sknt_4', 'sknt_8', 'sknt_12', 'sknt_16',
+            'skyc1_0', 'skyc1_4', 'skyc1_8', 'skyc1_12', 'skyc1_16',
+            'psgr_0', 'psgr_4', 'psgr_8', 'psgr_12', 'psgr_16',
+            'tmpf_0', 'tmpf_4', 'tmpf_8', 'tmpf_12', 'tmpf_16']
 
     X = data[features].as_matrix()
-    y = np.asarray(data['max_alt'],dtype="int_")
+    y = np.asarray(data['left_perimeter'],dtype="int_")
 
     for train_index, test_index in kf.split(X):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
-        y_train = soft_class(y_train)
-        y_test = soft_class(y_test)
+        # y_train = soft_class(y_train)
+        # y_test = soft_class(y_test)
         m.fit(X_train,y_train)
         train_score = m.score(X_train,y_train)
         test_score = m.score(X_test,y_test)
