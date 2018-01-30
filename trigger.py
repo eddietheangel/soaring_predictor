@@ -13,6 +13,7 @@ import feeder
 from feeder import update_weather,get_ready,load_models
 
 api_forecast = update_weather()
+time.sleep(10)
 data = get_ready(api_forecast)
 max_alt,good_day,XC = load_models()
 pred_max_alt = predict(data, max_alt)
