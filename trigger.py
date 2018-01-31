@@ -5,7 +5,6 @@ import time
 from datetime import datetime, timezone
 import re
 from math import cos,radians
-import psycopg2
 from sklearn.ensemble import RandomForestClassifier,RandomForestRegressor
 import warnings
 import pickle
