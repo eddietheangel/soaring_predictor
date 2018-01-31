@@ -1,3 +1,4 @@
+from __future__ import division
 import requests
 import json
 import pandas as pd
@@ -9,7 +10,6 @@ from sklearn.ensemble import RandomForestClassifier,RandomForestRegressor
 import warnings
 import pickle
 import pytz
-from __future__ import division
 from flask import Flask, render_template, request, jsonify
 
 
