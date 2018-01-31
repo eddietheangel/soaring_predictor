@@ -2,12 +2,13 @@ import requests
 import json
 import pandas as pd
 import time
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import re
 from math import cos,radians
 from sklearn.ensemble import RandomForestClassifier,RandomForestRegressor
 import warnings
 import pickle
+import pytz
 
 warnings.filterwarnings('ignore')
 
@@ -96,6 +97,15 @@ def get_ready(api_forecast):
 
     for col in direction:
         RDF[col]=RDF[col].apply(get_cos)
+
+    #filters for only today and tomorrow
+    tz = pytz.timezone('US/Pacific')
+    today = datetime.now(tz)
+    tomorrow = today + timedelta(days=1)
+    RDF = RDF[(RDF['date']== today.date()) | (RDF['date']==tomorrow.date())]
+    RDF.sort('date',inplace=True)
+    RDF.reset_index(inplace=True, drop=True)
+
 
     #creatinf fiels for pilot rank
     RDF = pd.concat([RDF]*3, ignore_index=True)
