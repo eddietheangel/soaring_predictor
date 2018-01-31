@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestClassifier,RandomForestRegressor
 import warnings
 import pickle
 import feeder
-from feeder import update_weather,get_ready,load_models
+from feeder import update_weather,get_ready,load_models,predict
 
 api_forecast = update_weather()
 time.sleep(10)
