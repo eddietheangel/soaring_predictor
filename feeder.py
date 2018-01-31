@@ -106,7 +106,7 @@ def get_ready(api_forecast):
     today = datetime.now(tz)
     tomorrow = today + timedelta(days=1)
     RDF = RDF[(RDF['date']== today.date()) | (RDF['date']==tomorrow.date())]
-    RDF.sort_values('date',inplace=True)
+    RDF = RDF.sort_values('date',inplace=True)
     RDF.reset_index(inplace=True, drop=True)
 
 
