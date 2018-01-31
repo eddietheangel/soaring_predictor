@@ -129,11 +129,11 @@ def get_cos(direction):
 
 def load_models():
 
-    with open('~/soaring-predictor/max_alt.pkl', 'rb') as f:
+    with open('/home/ubuntu/soaring_predictor/max_alt.pkl', 'rb') as f:
         max_alt = pickle.load(f)
-    with open('~/soaring-predictor/good_day.pkl', 'rb') as f:
+    with open('/home/ubuntu/soaring_predictor/good_day.pkl', 'rb') as f:
         good_day = pickle.load(f)
-    with open('~/soaring-predictor/XC.pkl', 'rb') as f:
+    with open('/home/ubuntu/soaring_predictor/XC.pkl', 'rb') as f:
         XC = pickle.load(f)
     return max_alt,good_day,XC
 
