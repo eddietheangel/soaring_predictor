@@ -9,7 +9,7 @@
 <body>
 
 <div class="container">
-  <div class="row">
+  <div class="row" style="padding-top:80px">
     <div class="col-lg-12">
 
       <h2>Soaring predictor for Tiger Mountain - by Eduardo de Angelis</h2>
@@ -19,7 +19,7 @@
           <th>Date</th>
           <th>Pilot expertise</th>
           <th>Maximum altitude (in meters)</th>
-          <th>Breaking range I (probability)</th>
+          <th>Breaking zone 1 (probability)</th>
           <th>XC (probability)</th>
         <TR>
         {% for doc in docs %}
@@ -31,6 +31,7 @@
         </TR>
         {% endfor %}
       </table>
+      <p>*Zone 1: North of North ridge, west of Squack</p>
     </div>
   </div>
 </div>
