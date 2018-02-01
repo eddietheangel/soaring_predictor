@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Soaring predictor for Tiger Mountain - by Eduardo de Angelis</h2>
+  <p>Forecast for the next 24h</p>
+  <table class="table table-bordered table-striped">
+    <TR>
+      <th>Date</th>
+      <th>Pilot expertise</th>
+      <th>Maximum altitude (in meters)</th>
+      <th>Breaking range I (probability)</th>
+      <th>XC (probability)</th>
+    <TR>
+    {% for doc in docs %}
+       <TD class="c1">{{doc[0]}}</TD>
+       <TD class="c2">{{doc[1]}}</TD>
+       <TD class="c3">{{doc[2]}}</TD>
+       <TD class="c4">{{doc[3]}}</TD>
+       <TD class="c5">{{doc[4]}}</TD>
+    </TR>
+    {% endfor %}
+  </table>
+</div>
+
+</body>
+</html>

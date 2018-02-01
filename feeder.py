@@ -11,6 +11,7 @@ import warnings
 import pickle
 import pytz
 from flask import Flask, render_template, request, jsonify
+import numpy as np
 
 
 warnings.filterwarnings('ignore')
@@ -106,23 +107,23 @@ def get_ready(api_forecast):
     today = datetime.now(tz)
     tomorrow = today + timedelta(days=1)
     RDF = RDF[(RDF['date']== today.date()) | (RDF['date']==tomorrow.date())]
-    RDF.sort_values('date',inplace=True)
-    RDF.reset_index(inplace=True, drop=True)
-    RDF.sort_values('date',inplace=True)
-    RDF.reset_index(inplace=True, drop=True)
 
+    # print(RDF)
 
-    #creatinf fiels for pilot rank
-    RDF = pd.concat([RDF]*3, ignore_index=True)
+    #creatinf fiels for pilot rank - ugly, but it works
+    RDF = pd.concat([RDF]*3, ignore_index=False)
+    RDF.sort_values('date',inplace=True)
+    RDF.reset_index(drop = True, inplace=True)
     RDF['overall_rank_0']=0
     RDF['overall_rank_1']=0
     RDF['overall_rank_2']=0
-    RDF['overall_rank_0'][0]=1
-    RDF['overall_rank_0'][3]=1
-    RDF['overall_rank_1'][1]=1
-    RDF['overall_rank_1'][4]=1
-    RDF['overall_rank_2'][2]=1
-    RDF['overall_rank_2'][5]=1
+    RDF['overall_rank_1'][0]=1
+    RDF['overall_rank_2'][1]=1
+    RDF['overall_rank_0'][2]=1
+    RDF['overall_rank_1'][3]=1
+    RDF['overall_rank_2'][4]=1
+    RDF['overall_rank_0'][5]=1
+
 
     return RDF
 
@@ -144,12 +145,19 @@ def get_cos(direction):
 
 def load_models():
 
-    with open('/home/ubuntu/soaring_predictor/max_alt.pkl', 'rb') as f:
+    with open('/Users/eduardodeangelis/Desktop/galvanize/soaring-predictor/max_alt.pkl', 'rb') as f:
         max_alt = pickle.load(f)
-    with open('/home/ubuntu/soaring_predictor/good_day.pkl', 'rb') as f:
+    with open('/Users/eduardodeangelis/Desktop/galvanize/soaring-predictor/good_day.pkl', 'rb') as f:
         good_day = pickle.load(f)
-    with open('/home/ubuntu/soaring_predictor/XC.pkl', 'rb') as f:
+    with open('/Users/eduardodeangelis/Desktop/galvanize/soaring-predictor/XC.pkl', 'rb') as f:
         XC = pickle.load(f)
+
+    # with open('/home/ubuntu/soaring_predictor/max_alt.pkl', 'rb') as f:
+    #     max_alt = pickle.load(f)
+    # with open('/home/ubuntu/soaring_predictor/good_day.pkl', 'rb') as f:
+    #     good_day = pickle.load(f)
+    # with open('/home/ubuntu/soaring_predictor/XC.pkl', 'rb') as f:
+    #     XC = pickle.load(f)
     return max_alt,good_day,XC
 
 
@@ -175,3 +183,12 @@ def predict(RDF, model):
 
     X = label_X(RDF)
     return model.predict(X)
+
+def predict_prob(RDF, model):
+    '''Input:
+        RDF = formated date from weather api
+        model = unpicked max_alt model
+        Ouput: np array with 6 predictions'''
+
+    X = label_X(RDF)
+    return model.predict_proba(X)
