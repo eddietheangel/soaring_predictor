@@ -25,17 +25,8 @@ dates = [str(i) for i in data['date'].as_matrix()]
 experience = ['Beginner','Intermediate','Expert']*2
 docs = []
 for i in range(len(dates)):
-    # docs.append(dates[i])
-    # docs.append(experience[i])
-    # docs.append(pred_max_alt[i])
-    # docs.append(pred_good_day[:,1][i])
-    # docs.append(pred_XC[:,1][i])
     docs.append([dates[i],experience[i],int(pred_max_alt[i]),
                  round(pred_good_day[i][1],2),round(pred_XC[i][1],2)])
-# print(docs)
-# print('Max altitude predictions: {}'.format(pred_max_alt))
-# print('Good day predictions: {}'.format(pred_good_day))
-# print('XC predictions: {}'.format(pred_XC))
 
 @app.route('/')
 def index():
