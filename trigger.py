@@ -30,7 +30,7 @@ for i in range(len(dates)):
 
 @app.route('/')
 def index():
-    return render_template('forecast.html', docs = docs)
+    return render_template('forecast_beta.html', docs = docs)
 
 if __name__ == "__main__":
     app.run()
